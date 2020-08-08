@@ -1,22 +1,12 @@
 const searchButton = document.getElementById("searchButton");
 const searchInput = document.getElementById("search");
 const results = document.getElementById("results");
-const errorImage = document.getElementById("error");
 const divTypes = document.getElementById("divTypes");
 const divTypesNames = document.getElementById("divTypesNames");
-errorImage.hidden = true;
-// const searchPokemon = async (pokemonId) => {
-//     const { data } = await axios.get(
-//         `http://pokeapi.co/api/v2/pokemon/${pokemonId}`
-//     );
-//     makeDiv(
-//         data.name,
-//         data.height,
-//         data.weight,
-//         data.sprites.front_default,
-//         data.sprites.back_default
-//     );
-// };
+const nextPokemon = document.getElementById("nextPokemon");
+const previousPokemon = document.getElementById("previousPokemon");
+const divImg = document.getElementById("divImg");
+const headerPokemonType = document.getElementById("headerPokemonType");
 
 searchButton.addEventListener("click", () => {
     searching(searchInput.value);
@@ -24,25 +14,68 @@ searchButton.addEventListener("click", () => {
 
 async function searching(id) {
     try {
-        errorImage.hidden = true;
         const { data } = await axios.get(
             `http://pokeapi.co/api/v2/pokemon/${id}`
         );
+        results.style.background =
+            "linear-gradient(180deg, white 20%, #f0f0f0c2 80%)";
+        divTypes.hidden = false;
+        divImg.hidden = false;
         makeDiv(
             data.name,
+            id,
             data.height,
             data.weight,
             data.sprites.front_default,
             data.sprites.back_default,
             data.types
         );
+        debugger;
+        if (id == 1) {
+            nextPreviosButton("10153", "2");
+        } else if ((id > 1 && id < 806) || (id > 1000 && id < 10153)) {
+            nextPreviosButton(`${parseInt(id) - 1}`, `${parseInt(id) + 1}`);
+        } else if (id == 807) {
+            nextPreviosButton("806", "10001");
+        } else if (id == 10153) {
+            nextPreviosButton("10152", "1");
+        }
     } catch (e) {
-        errorImage.hidden = false;
-        results.innerHTML="";
+        results.innerHTML = "";
         divTypes.innerHTML = "";
         divTypesNames.innerHTML = "";
-        searchInput.value="";
+        searchInput.value = "";
+        divImg.innerHTML = "";
+        headerPokemonType.innerHTML = "";
+        headerPokemonType.style = "";
+        results.style.background = "";
+        divTypes.hidden = true;
+        divImg.hidden = true;
+        nextPokemon.innerHTML = "";
+        previousPokemon.innerHTML = "";
+        Swal.fire({
+            icon: "error",
+            title: "Oops... error 404",
+            text: "Something went wrong!",
+        });
     }
+    searchInput.value = "";
+}
+
+async function nextPreviosButton(previousID, nextID) {
+    debugger;
+    const next = await axios.get(`http://pokeapi.co/api/v2/pokemon/${nextID}`);
+    const previous = await axios.get(
+        `http://pokeapi.co/api/v2/pokemon/${previousID}`
+    );
+    nextPokemon.innerHTML = `${next.data.name} #${next.data.id}   <i class="fa fa-arrow-right" aria-hidden="true"></i>`;
+    previousPokemon.innerHTML = `<i class="fa fa-arrow-left" aria-hidden="true"></i>   ${previous.data.name} #${previous.data.id}`;
+    nextPokemon.onclick = () => {
+        searching(next.data.id);
+    };
+    previousPokemon.onclick = () => {
+        searching(previous.data.id);
+    };
 }
 
 searchInput.addEventListener("keyup", function (e) {
@@ -51,65 +84,72 @@ searchInput.addEventListener("keyup", function (e) {
     }
 });
 
-const makeDiv = (name, height, weight, front, over, types) => {
+const makeDiv = (name, id, height, weight, front, over, types) => {
     const htmlText = `
-    <div class="pokemonContainer">
-    <div>Name: ${name}</div>
-    <div>height: ${height}</div>
-    <div>weight: ${weight}</div>
-    <div><img id="pokemonImg" src="${front}" /></div> 
+    <div id="nameId">
+    <div id="namePokemon">${name}</div>
+    <span id="idPokemon">#${id}</span>
+    </div>
+    <div id="ditails">
+    <div id="heightPokemon">height: ${height} </div>
+    <div id="weightPokemon">weight: ${weight}</div>
     </div>`;
+    divImg.innerHTML = `<img id="pokemonImg" src="${front}" /></div> `;
     results.innerHTML = htmlText;
     const pokemonImg = document.getElementById("pokemonImg");
     pokemonImg.onmouseover = () => (pokemonImg.src = over);
     pokemonImg.onmouseout = () => (pokemonImg.src = front);
 
-    divTypes.innerHTML = "";
+    divTypes.innerHTML = "<p>Type</p>";
     for (let i = 0; i < types.length; i++) {
-        const type = document.createElement("div");
-        type.innerHTML = `type ${i + 1}: ${types[i].type.name}`;
-        type.onclick = () => {
-            axios.get(`${types[i].type.url}`).then((res) => {
-                divTypesNames.innerHTML = "";
-                for (let j = 0; j < res.data.pokemon.length; j++) {
-                    const typeName = document.createElement("li");
-                    typeName.innerHTML = res.data.pokemon[j].pokemon.name;
-                    divTypesNames.append(typeName);
-                    typeName.onclick = () => {
-                        searching(res.data.pokemon[j].pokemon.name);
-                        divTypes.innerHTML = "";
-                        divTypesNames.innerHTML = "";
-                        searchInput.value="";
-                    };
-                }
-            });
+        const type = document.createElement("button");
+        type.innerHTML = types[i].type.name;
+        type.className = types[i].type.name;
+        type.onclick = async () => {
+            divTypesNames.innerHTML = "";
+            const { data } = await axios.get(`${types[i].type.url}`); //"https://pokeapi.co/api/v2/type/12/"
+            headerPokemonType.innerHTML = `Pokemons from type ${data.name}`;
+            headerPokemonType.style.background = getComputedStyle(
+                type
+            ).background;
+            headerPokemonType.style.backgroundColor = getComputedStyle(
+                type
+            ).backgroundColor;
+            headerPokemonType.style.color = getComputedStyle(type).color;
+
+            for (let j = 0; j < data.pokemon.length; j++) {
+                creatPokemonsByType(data.pokemon[j].pokemon.url); //https://pokeapi.co/api/v2/pokemon/1/
+            }
         };
         divTypes.append(type);
     }
 };
 
-// const searching=()=>{
-//   axios.get(`http://pokeapi.co/api/v2/pokemon/${searchInput.value}`)
-//   .then(res=>{
-
-// const name=document.createElement("h1");
-// const height=document.createElement("p");
-// const weight=document.createElement("p");
-// const image=document.createElement("img");
-// name.id="name";
-// height.id="height";
-// weight.id="weight";
-// image.id="image";
-
-// name.innerHTML=data.name;
-// height.innerHTML=data.height;
-// weight.innerHTML=data.weight;
-// // image.src=data.sprites.front_default;
-
-// results.append(
-//   name,
-//   height,
-//   weight,
-//   image
-// );
-//   }
+async function creatPokemonsByType(url) {
+    //https://pokeapi.co/api/v2/pokemon/1/
+    const pokemonByTypeContainer = document.createElement("div");
+    const pokemonByTypeName = document.createElement("div");
+    const pokemonByTypePicture = document.createElement("img");
+    const pokemonByTypeId = document.createElement("div");
+    pokemonByTypeContainer.className = "pokemonByTypeContainer";
+    pokemonByTypeName.className = "pokemonByTypeName";
+    pokemonByTypePicture.className = "pokemonByTypePicture";
+    pokemonByTypeId.className = "pokemonByTypeId";
+    const { data } = await axios.get(url);
+    pokemonByTypeName.innerHTML = data.name;
+    pokemonByTypePicture.src = data.sprites.front_default;
+    pokemonByTypeId.innerHTML = `#${data.id}`;
+    pokemonByTypeContainer.append(
+        pokemonByTypePicture,
+        pokemonByTypeId,
+        pokemonByTypeName
+    );
+    divTypesNames.appendChild(pokemonByTypeContainer);
+    pokemonByTypeContainer.onclick = () => {
+        searching(data.id);
+        divTypesNames.innerHTML = "";
+        searchInput.value = "";
+        headerPokemonType.innerHTML = "";
+        headerPokemonType.style = "";
+    };
+}

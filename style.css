@@ -1,0 +1,291 @@
+@import url(//db.onlinewebfonts.com/c/84774c4a3a6ad34965bf749fbe288ab0?family=FlexoW01-Medium);
+* {
+    font-family: "FlexoW01-Medium", Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all ease 200ms;
+}
+*:focus {
+    outline: none;
+}
+body {
+    background-image: url(https://assets.pokemon.com//assets/cms2/img/misc/virtual-backgrounds/masters/forest.jpg);
+    background-size: 100% 100%;
+    background-attachment: fixed; /* חשוב !!!!! גורם לתמונה לא להתגלגל*/
+}
+#first {
+    display: grid;
+    height: 70vh;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 0.8fr 2.7fr 1.3fr;
+    gap: 10px 5px;
+    grid-template-areas: "previousPokemon previousPokemon previousPokemon nextPokemon nextPokemon nextPokemon" ". searchControl searchControl searchControl searchControl ." ". divImg divImg results results ." ". divImg divImg divTypes divTypes .";
+}
+
+#searchControl {
+    grid-area: searchControl;
+    background: #313131;
+    border-radius: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search {
+    width: 15em;
+    text-align: center;
+    border-radius: 0.5em;
+    border: transparent;
+    font-size: 2em;
+    margin-left: 4em;
+    opacity: 0.8;
+}
+#search:hover {
+    opacity: 1;
+}
+#search:hover::placeholder {
+    color: black;
+}
+#searchButton {
+    font-size: 1.5em;
+    border-radius: 1em;
+    border: transparent;
+    margin-left: 1em;
+    cursor: pointer;
+    padding: 0.2em 0.5em;
+}
+#nextPokemon > i,
+#previousPokemon > i {
+    margin: 1em;
+}
+#searchButton:hover {
+    background-color: yellowgreen;
+    color: white;
+}
+#nextPokemon {
+    grid-area: nextPokemon;
+    margin-right: 10em;
+    border-radius: 3em 2em 15em 3em;
+    border: transparent;
+    cursor: pointer;
+    font-size: 1.5em;
+    background-color: #adffbac2;
+    cursor: pointer;
+}
+#nextPokemon:hover {
+    background-color: #3eff5fde;
+}
+
+#previousPokemon {
+    grid-area: previousPokemon;
+    margin-left: 10em;
+    border-radius: 2em 3em 3em 15em;
+    border: transparent;
+    cursor: pointer;
+    font-size: 1.5em;
+    background-color: #ffadadc2;
+    cursor: pointer;
+}
+
+#previousPokemon:hover {
+    background-color: #ff3e3ede;
+}
+
+#results {
+    grid-area: results;
+    border-radius: 3em;
+    /* background: linear-gradient(180deg, white 20%, #f0f0f0c2 80%); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#nameId {
+    display: flex;
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+#idPokemon {
+    margin-left: 1em;
+    color: grey;
+}
+#ditails {
+    font-size: 1.5em;
+    width: 80%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    text-align: center;
+}
+#divImg {
+    grid-area: divImg;
+}
+
+#pokemonImg {
+    height: 100%;
+    background-color: #f0f0f0c2;
+    border-radius: 5em;
+}
+
+#divTypes {
+    grid-area: divTypes;
+    border-radius: 3em;
+    background: linear-gradient(180deg, white 50%, #f0f0f0c2 50%);
+    text-align: center;
+}
+#divTypes > button {
+    border-radius: 0.5em;
+    padding: 0.5em 3em;
+    margin: 1em;
+    font-size: 1em;
+    opacity: 0.8;
+    cursor: pointer;
+}
+#divTypes > button:hover {
+    opacity: 1;
+    transform: scale(1.02);
+}
+#divTypes > p {
+    font-size: 3em;
+}
+
+#headerPokemonType {
+    text-align: center;
+    margin: 2em 15em 1em 15em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
+
+#divTypesNames {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.pokemonByTypeContainer {
+    margin: 0.5em;
+    border-radius: 2em;
+    background-color: #999999da;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.pokemonByTypeContainer:hover {
+    background-color: #ffffffda;
+}
+
+.pokemonByTypePicture {
+    background-color: #f0f0f06c;
+    border-radius: 2em;
+}
+.pokemonByTypePicture :hover {
+    background-color: white;
+}
+
+.pokemonByTypeId {
+    margin-top: auto;
+}
+
+.normal {
+    background: linear-gradient(180deg, #a4acaf 50%, #a4acaf 50%);
+    background-color: #a4acaf;
+    color: #212121;
+}
+.fighting {
+    background: linear-gradient(180deg, #d56723 50%, #d56723 50%);
+    background-color: #d56723;
+    color: #fff;
+}
+.flying {
+    background: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%);
+    background-color: #3dc7ef;
+    color: #212121;
+}
+.poison {
+    background: linear-gradient(180deg, #b97fc9 50%, #b97fc9 50%);
+    background-color: #b97fc9;
+    color: #fff;
+}
+.ground {
+    background: linear-gradient(180deg, #f7de3f 50%, #ab9842 50%);
+    background-color: #f7de3f;
+    color: #212121;
+}
+.bug {
+    background: linear-gradient(180deg, #729f3f 50%, #729f3f 50%);
+    background-color: #729f3f;
+    color: #fff;
+}
+.ghost {
+    background: linear-gradient(180deg, #7b62a3 50%, #7b62a3 50%);
+    background-color: #7b62a3;
+    color: #fff;
+}
+
+.steel {
+    background: linear-gradient(180deg, #9eb7b8 50%, #9eb7b8 50%);
+    background-color: #9eb7b8;
+    color: #212121;
+}
+.fire {
+    background: linear-gradient(180deg, #fd7d24 50%, #fd7d24 50%);
+    background-color: #fd7d24;
+    color: #fff;
+}
+.grass {
+    background: linear-gradient(180deg, #9bcc50 50%, #9bcc50 50%);
+    background-color: #9bcc50;
+    color: #212121;
+}
+.electric {
+    background: linear-gradient(180deg, #eed535 50%, #eed535 50%);
+    background-color: #eed535;
+    color: #212121;
+}
+
+.psychic {
+    background: linear-gradient(180deg, #f366b9 50%, #f366b9 50%);
+    background-color: #f366b9;
+    color: #fff;
+}
+.ice {
+    background: linear-gradient(180deg, #51c4e7 50%, #51c4e7 50%);
+    background-color: #51c4e7;
+    color: #212121;
+}
+.dragon {
+    background: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+    background-color: #53a4cf;
+    color: #fff;
+}
+.dark {
+    background: linear-gradient(180deg, #707070 50%, #707070 50%);
+    background-color: #707070;
+    color: #fff;
+}
+.fairy {
+    background: linear-gradient(180deg, #fdb9e9 50%, #fdb9e9 50%);
+    background-color: #fdb9e9;
+    color: #212121;
+}
+.unknown {
+    background: linear-gradient(180deg, #a4acaf 50%, #a4acaf 50%);
+    background-color: #a4acaf;
+    color: #212121;
+}
+.shadow {
+    background: linear-gradient(180deg, #9eb7b8 50%, #9eb7b8 50%);
+    background-color: #9eb7b8;
+    color: #212121;
+}
+.rock {
+    background: linear-gradient(180deg, #a38c21 50%, #a38c21 50%);
+    background-color: #a38c21;
+    color: #fff;
+}
+.water {
+    background: linear-gradient(180deg, #4592c4 50%, #4592c4 50%);
+    background-color: #4592c4;
+    color: #fff;
+}

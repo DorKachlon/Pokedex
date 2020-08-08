@@ -4,14 +4,31 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Pokedex</title>
+
+        <link rel="stylesheet" href="style.css" />
+
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     </head>
     <body>
-        <input id="search" placeholder="search" />
-        <button id="searchButton">Search</button>
-        <div id="results"></div>
-        <div id="divTypes"></div>
-        <ol id="divTypesNames"></ol>
-        <img id="error" src="https://ih1.redbubble.net/image.731955024.9007/farp,small,wall_texture,product,750x1000.u3.jpg">
+        <section id="first">
+            <section id="searchControl">
+                <input id="search" placeholder="search" />
+                <button id="searchButton"> <i class="fa fa-search" aria-hidden="true"></i></button>
+            </section>
+            <button id="nextPokemon" ></button>
+            <button id="previousPokemon"></button>
+
+            <div id="results" hidden="true" ></div>
+            <div id="divImg" hidden="true"></div>
+            <div id="divTypes" hidden="true"></div>
+        </section>
+        
+        <h2 id="headerPokemonType"></h2>
+        <div id="divTypesNames"></div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <!-- todo later: use a local copy installed via npm -->
         <script type:"module" src="./main.js"></script>
