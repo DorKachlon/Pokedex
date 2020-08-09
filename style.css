@@ -16,9 +16,9 @@ body {
 }
 #first {
     display: grid;
-    height: 70vh;
+
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 0.2fr 0.8fr 2.7fr 1.3fr;
+    grid-template-rows: 5vw 5vw 10vw 10vw;
     gap: 10px 5px;
     grid-template-areas: "previousPokemon previousPokemon previousPokemon nextPokemon nextPokemon nextPokemon" ". searchControl searchControl searchControl searchControl ." ". divImg divImg results results ." ". divImg divImg divTypes divTypes .";
 }
@@ -30,6 +30,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 5vw;
 }
 
 #search {
@@ -37,8 +38,8 @@ body {
     text-align: center;
     border-radius: 0.5em;
     border: transparent;
-    font-size: 2em;
-    margin-left: 4em;
+    font-size: 2.5vw;
+    margin-left: 2vw;
     opacity: 0.8;
 }
 #search:hover {
@@ -48,7 +49,7 @@ body {
     color: black;
 }
 #searchButton {
-    font-size: 1.5em;
+    font-size: 2vw;
     border-radius: 1em;
     border: transparent;
     margin-left: 1em;
@@ -57,7 +58,7 @@ body {
 }
 #nextPokemon > i,
 #previousPokemon > i {
-    margin: 1em;
+    margin: 1vw;
 }
 #searchButton:hover {
     background-color: yellowgreen;
@@ -65,11 +66,11 @@ body {
 }
 #nextPokemon {
     grid-area: nextPokemon;
-    margin-right: 10em;
+    margin-right: 10vw;
     border-radius: 3em 2em 15em 3em;
     border: transparent;
     cursor: pointer;
-    font-size: 1.5em;
+    font-size: 2vw;
     background-color: #adffbac2;
     cursor: pointer;
 }
@@ -79,11 +80,11 @@ body {
 
 #previousPokemon {
     grid-area: previousPokemon;
-    margin-left: 10em;
+    margin-left: 10vw;
     border-radius: 2em 3em 3em 15em;
     border: transparent;
     cursor: pointer;
-    font-size: 1.5em;
+    font-size: 2vw;
     background-color: #ffadadc2;
     cursor: pointer;
 }
@@ -94,7 +95,7 @@ body {
 
 #results {
     grid-area: results;
-    border-radius: 3em;
+    border-radius: 5vw;
     /* background: linear-gradient(180deg, white 20%, #f0f0f0c2 80%); */
     display: flex;
     flex-direction: column;
@@ -102,43 +103,44 @@ body {
 }
 #nameId {
     display: flex;
-    font-size: 3em;
-    margin-bottom: 0.5em;
+    font-size: 3vw;
+    margin-bottom: 0.5vw;
 }
 #idPokemon {
-    margin-left: 1em;
+    margin-left: 1vw;
     color: grey;
 }
 #ditails {
-    font-size: 1.5em;
+    font-size: 1.5vw;
     width: 80%;
-    height: 80%;
+    height: 5vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr ;
     text-align: center;
 }
 #divImg {
     grid-area: divImg;
+    text-align: center;
 }
 
 #pokemonImg {
-    height: 100%;
+    height: 21vw;
     background-color: #f0f0f0c2;
-    border-radius: 5em;
+    border-radius: 7vw;
 }
 
 #divTypes {
     grid-area: divTypes;
-    border-radius: 3em;
+    border-radius: 7vw;
     background: linear-gradient(180deg, white 50%, #f0f0f0c2 50%);
     text-align: center;
 }
 #divTypes > button {
     border-radius: 0.5em;
-    padding: 0.5em 3em;
-    margin: 1em;
-    font-size: 1em;
+    padding: 0.5vw 3vw;
+    margin: 1vw;
+    font-size: 1vw;
     opacity: 0.8;
     cursor: pointer;
 }
@@ -147,24 +149,27 @@ body {
     transform: scale(1.02);
 }
 #divTypes > p {
-    font-size: 3em;
+    font-size: 3.5vw;
 }
 
 #headerPokemonType {
     text-align: center;
-    margin: 2em 15em 1em 15em;
+    margin: 2vw 15vw 1vw 15vw;
     padding: 0.5em;
     border-radius: 0.5em;
+    font-size: 2.5vw;
+    bottom: ;
 }
 
 #divTypesNames {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(7,12.5vw);
+    gap: 1vw 1vw;
+    margin-left: 2vw;
 }
 
 .pokemonByTypeContainer {
-    margin: 0.5em;
-    border-radius: 2em;
+    border-radius: 2vw;
     background-color: #999999da;
     display: flex;
     flex-direction: column;
@@ -177,7 +182,8 @@ body {
 
 .pokemonByTypePicture {
     background-color: #f0f0f06c;
-    border-radius: 2em;
+    border-radius: 2vw;
+    height: 10vw;
 }
 .pokemonByTypePicture :hover {
     background-color: white;
@@ -185,6 +191,10 @@ body {
 
 .pokemonByTypeId {
     margin-top: auto;
+    font-size: 1.5vw;
+}
+.pokemonByTypeName{
+    font-size: 1.5vw;
 }
 
 .normal {

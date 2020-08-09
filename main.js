@@ -30,7 +30,7 @@ async function searching(id) {
             data.sprites.back_default,
             data.types
         );
-        debugger;
+
         if (id == 1) {
             nextPreviosButton("10153", "2");
         } else if ((id > 1 && id < 806) || (id > 1000 && id < 10153)) {
@@ -53,6 +53,7 @@ async function searching(id) {
         divImg.hidden = true;
         nextPokemon.innerHTML = "";
         previousPokemon.innerHTML = "";
+        headerPokemonType.innerHTML = "";
         Swal.fire({
             icon: "error",
             title: "Oops... error 404",
@@ -60,10 +61,11 @@ async function searching(id) {
         });
     }
     searchInput.value = "";
+    headerPokemonType.hidden = true;
+    divTypesNames.innerHTML = "";
 }
 
 async function nextPreviosButton(previousID, nextID) {
-    debugger;
     const next = await axios.get(`http://pokeapi.co/api/v2/pokemon/${nextID}`);
     const previous = await axios.get(
         `http://pokeapi.co/api/v2/pokemon/${previousID}`
@@ -118,8 +120,10 @@ const makeDiv = (name, id, height, weight, front, over, types) => {
             headerPokemonType.style.color = getComputedStyle(type).color;
 
             for (let j = 0; j < data.pokemon.length; j++) {
+                debugger;
                 creatPokemonsByType(data.pokemon[j].pokemon.url); //https://pokeapi.co/api/v2/pokemon/1/
             }
+            headerPokemonType.hidden = false;
         };
         divTypes.append(type);
     }
@@ -127,6 +131,7 @@ const makeDiv = (name, id, height, weight, front, over, types) => {
 
 async function creatPokemonsByType(url) {
     //https://pokeapi.co/api/v2/pokemon/1/
+    debugger;
     const pokemonByTypeContainer = document.createElement("div");
     const pokemonByTypeName = document.createElement("div");
     const pokemonByTypePicture = document.createElement("img");
@@ -136,6 +141,7 @@ async function creatPokemonsByType(url) {
     pokemonByTypePicture.className = "pokemonByTypePicture";
     pokemonByTypeId.className = "pokemonByTypeId";
     const { data } = await axios.get(url);
+    debugger;
     pokemonByTypeName.innerHTML = data.name;
     pokemonByTypePicture.src = data.sprites.front_default;
     pokemonByTypeId.innerHTML = `#${data.id}`;
