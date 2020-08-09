@@ -120,7 +120,6 @@ const makeDiv = (name, id, height, weight, front, over, types) => {
             headerPokemonType.style.color = getComputedStyle(type).color;
 
             for (let j = 0; j < data.pokemon.length; j++) {
-                debugger;
                 creatPokemonsByType(data.pokemon[j].pokemon.url); //https://pokeapi.co/api/v2/pokemon/1/
             }
             headerPokemonType.hidden = false;
@@ -129,7 +128,7 @@ const makeDiv = (name, id, height, weight, front, over, types) => {
     }
 };
 
-async function creatPokemonsByType(url) {
+function creatPokemonsByType(url) {
     //https://pokeapi.co/api/v2/pokemon/1/
     debugger;
     const pokemonByTypeContainer = document.createElement("div");
@@ -140,22 +139,24 @@ async function creatPokemonsByType(url) {
     pokemonByTypeName.className = "pokemonByTypeName";
     pokemonByTypePicture.className = "pokemonByTypePicture";
     pokemonByTypeId.className = "pokemonByTypeId";
-    const { data } = await axios.get(url);
-    debugger;
-    pokemonByTypeName.innerHTML = data.name;
-    pokemonByTypePicture.src = data.sprites.front_default;
-    pokemonByTypeId.innerHTML = `#${data.id}`;
-    pokemonByTypeContainer.append(
-        pokemonByTypePicture,
-        pokemonByTypeId,
-        pokemonByTypeName
-    );
-    divTypesNames.appendChild(pokemonByTypeContainer);
-    pokemonByTypeContainer.onclick = () => {
-        searching(data.id);
-        divTypesNames.innerHTML = "";
-        searchInput.value = "";
-        headerPokemonType.innerHTML = "";
-        headerPokemonType.style = "";
-    };
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+            pokemonByTypeName.innerHTML = data.name;
+            pokemonByTypePicture.src = data.sprites.front_default;
+            pokemonByTypeId.innerHTML = `#${data.id}`;
+            pokemonByTypeContainer.append(
+                pokemonByTypePicture,
+                pokemonByTypeId,
+                pokemonByTypeName
+            );
+            divTypesNames.appendChild(pokemonByTypeContainer);
+            pokemonByTypeContainer.onclick = () => {
+                searching(data.id);
+                divTypesNames.innerHTML = "";
+                searchInput.value = "";
+                headerPokemonType.innerHTML = "";
+                headerPokemonType.style = "";
+            };
+        });
 }
